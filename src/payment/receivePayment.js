@@ -1,11 +1,14 @@
-require('dotenv/config')
-const mercadopago = require('mercadopago')
+const mercadopago = require('../config/mercadopago.js')
 
-const accessToken = process.env.ACCESS_TOKEN
-console.log(accessToken)
+module.exports = {
 
-mercadopago.configurations(
-    {
-        accessToken: accessToken
-    })
+  async payment(req, res) {
 
+    try {
+      const preference = await mercadopago.preferences.create(req.body);
+      return res.json({ "redirect": preference.body.init_point });
+    } catch (err) {
+      return res.send(err.message);
+    }
+  }
+}

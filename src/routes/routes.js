@@ -1,9 +1,8 @@
-module.exports = (app) =>{
-    app.get('/receive-payment', (req, res)=>{
-        require('../receivePayment/receivePayment.js')
-        //console.log("route: receiver-payment")
-    })
-    app.get('/payment-installments', (req, res)=>{
-        console.log("route: payment-installments")
+const  paymentControlller  = require('../payment/receivePayment.js')
+const cors = require("cors")
+
+module.exports = (app) => {
+    app.post('/checkout/', cors(), (req, res) => {
+        paymentControlller.payment(req, res)
     })
 }
